@@ -10,6 +10,20 @@
     },
     "predefinedServers": {
         "containerbase": [
+            {
+                "name": "RichNet Local",
+                "description": "Local openfsd (Docker) for testing",
+                "address": "127.0.0.1",
+                "port": 6809,
+                "fsdSetup": {
+                    "textCodec": "UTF-8",
+                    "sendReceive": 749
+                },
+                "ecosystem": {
+                    "system": 4
+                },
+                "isAcceptingConnections": true
+            }
         ]
     },
     "sharedUrl": {
@@ -44,5 +58,8 @@
     },
     "vatsimAuthUrl": {
         "url": "https://auth.vatsim.net/api/fsd-jwt"
+    },
+    "fsdAuthUrl": {
+        "url": "http://127.0.0.1:8000/api/v1/fsd-jwt"
     }
 }
