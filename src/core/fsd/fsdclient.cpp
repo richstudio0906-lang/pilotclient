@@ -156,8 +156,10 @@ namespace swift::core::fsd
         {
             codec = QStringConverter::Utf8;
         }
-        const int protocolRev = (server.getEcosystem() == CEcosystem::vatsim()) ? PROTOCOL_REVISION_VATSIM_VELOCITY :
-                                                                                  PROTOCOL_REVISION_CLASSIC;
+        // openfsd (our own network) only accepts the Velocity protocol revisions 100-101
+        const bool velocity =
+            server.getEcosystem() == CEcosystem::vatsim() || server.getEcosystem() == CEcosystem::richNet();
+        const int protocolRev = velocity ? PROTOCOL_REVISION_VATSIM_VELOCITY : PROTOCOL_REVISION_CLASSIC;
 
         QWriteLocker l(&m_lockUserClientBuffered);
         m_server = server;
@@ -1357,9 +1359,10 @@ namespace swift::core::fsd
         {
             // Other FSD servers send the controller ATIS as text message. The following conditions need to be met:
             // * non-VATSIM server. VATSIM has a specific ATIS message
+            //   (our own network runs openfsd, which relays the VATSIM style ATIS replies as well)
             // * Receiver callsign must be owner callsign and not any type of broadcast.
             // * We have requested the ATIS of this controller before.
-            if (m_server.getEcosystem() != CEcosystem::vatsim() &&
+            if (m_server.getEcosystem() != CEcosystem::vatsim() && m_server.getEcosystem() != CEcosystem::richNet() &&
                 m_ownCallsign.asString() == textMessage.getReceiver() && m_pendingAtisQueries.contains(sender))
             {
                 maybeHandleAtisReply(sender, receiver, textMessage.m_message);
@@ -2607,9 +2610,18 @@ namespace swift::core::fsd
             case MessageType::DeleteATC: handleDeleteATC(tokens); break;
             case MessageType::DeletePilot: handleDeletePilot(tokens); break;
             case MessageType::FlightPlan: handleFlightPlan(tokens); break;
+            case MessageType::FsdIdentification:
+                if (this->getServer().getEcosystem() == CEcosystem::richNet())
+                {
+                    handleRichNetIdentification(tokens);
+                    break;
+                }
 #ifdef SWIFT_VATSIM_SUPPORT
-            case MessageType::FsdIdentification: handleFsdIdentification(tokens); break;
+                handleFsdIdentification(tokens);
+#else
+                handleUnknownPacket(tokens);
 #endif
+                break;
             case MessageType::KillRequest: handleKillRequest(tokens); break;
             case MessageType::PilotDataUpdate: handlePilotDataUpdate(tokens); break;
             case MessageType::Ping: handlePing(tokens); break;

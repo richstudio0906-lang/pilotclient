@@ -143,6 +143,7 @@ add_library(core SHARED
         fsd/flightplan.h
         fsd/fsdclient.cpp
         fsd/fsdclient.h
+        fsd/fsdclientrichnet.cpp
         fsd/fsdidentification.cpp
         fsd/fsdidentification.h
         fsd/interimpilotdataupdate.cpp

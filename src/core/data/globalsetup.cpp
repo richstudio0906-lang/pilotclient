@@ -113,7 +113,9 @@ namespace swift::core::data
 
              % u"AFV voice server URL: " % getAfvApiServerUrl().toQString(i18n) % separator
 
-             % u"AFV map URL: " % getAfvMapUrl().toQString(i18n);
+             % u"AFV map URL: " % getAfvMapUrl().toQString(i18n) % separator
+
+             % u"FSD auth URL: " % getFsdAuthUrl().toQString(i18n);
 
         return s;
     }

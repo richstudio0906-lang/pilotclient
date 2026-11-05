@@ -142,6 +142,9 @@ namespace swift::core::data
         //! VATSIM auth URL
         swift::misc::network::CUrl getVatsimAuthUrl() const { return m_vatsimAuthUrl; }
 
+        //! FSD JWT URL of our own network (openfsd: POST /api/v1/fsd-jwt)
+        swift::misc::network::CUrl getFsdAuthUrl() const { return m_fsdAuthUrl; }
+
         //! \copydoc swift::misc::mixin::String::toQString
         QString convertToQString(bool i18n = false) const;
 
@@ -180,6 +183,7 @@ namespace swift::core::data
         swift::misc::network::CUrl m_afvApiServerUrl; //!< AFV API server URL
         swift::misc::network::CUrl m_afvMapUrl; //!< AFV map URL
         swift::misc::network::CUrl m_vatsimAuthUrl; //!< VATSIM Auth URL
+        swift::misc::network::CUrl m_fsdAuthUrl; //!< FSD JWT URL of our own network
         bool m_dbDebugFlag = false; //!< can trigger DEBUG on the server, so you need to know what you are doing. Only
                                     //!< works with CBuildConfig::isLocalDeveloperDebugBuild
 
@@ -201,7 +205,8 @@ namespace swift::core::data
             SWIFT_METAMEMBER(dbDebugFlag, 0, RequiredForJson),
             SWIFT_METAMEMBER(afvApiServerUrl, 0, RequiredForJson),
             SWIFT_METAMEMBER(afvMapUrl, 0, RequiredForJson),
-            SWIFT_METAMEMBER(vatsimAuthUrl, 0, RequiredForJson));
+            SWIFT_METAMEMBER(vatsimAuthUrl, 0, RequiredForJson),
+            SWIFT_METAMEMBER(fsdAuthUrl));
     };
 } // namespace swift::core::data
 
