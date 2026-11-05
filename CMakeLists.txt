@@ -211,14 +211,17 @@ endif()
 # TODO This should be put into the corresponding targets responsible for these files and may use TARGET_RUNTIME_DLLS
 if(WIN32)
     add_custom_target(copy_externals_to_build_dir)
-    add_custom_command(TARGET copy_externals_to_build_dir
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different third_party/externals/win32-msvc/64/bin ${PROJECT_BINARY_DIR}/out/bin
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-    add_custom_command(TARGET copy_externals_to_build_dir
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different third_party/externals/win32-msvc/64/lib ${PROJECT_BINARY_DIR}/out/bin
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    # The externals repository is private; builds without it have nothing to copy
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/third_party/externals/win32-msvc/64)
+        add_custom_command(TARGET copy_externals_to_build_dir
+                POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different third_party/externals/win32-msvc/64/bin ${PROJECT_BINARY_DIR}/out/bin
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+        add_custom_command(TARGET copy_externals_to_build_dir
+                POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different third_party/externals/win32-msvc/64/lib ${PROJECT_BINARY_DIR}/out/bin
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    endif()
 endif()
 
 message(STATUS "Simulators:")
