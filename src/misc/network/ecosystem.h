@@ -33,7 +33,8 @@ namespace swift::misc::network
             Unspecified, //!< unspecified
             NoSystem, //!< no relevant ecosystem
             VATSIM, //!< VATSIM
-            PrivateFSD //!< Private FSD environment
+            PrivateFSD, //!< Private FSD environment
+            RichNet //!< Our own FSD network (openfsd), see richnet.h
         };
 
         //! Default constructor
@@ -77,6 +78,9 @@ namespace swift::misc::network
 
         //! FSD private
         static const CEcosystem &privateFsd();
+
+        //! Our own FSD network
+        static const CEcosystem &richNet();
 
     private:
         int m_system = static_cast<int>(Unspecified);

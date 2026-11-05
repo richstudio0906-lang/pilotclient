@@ -381,6 +381,7 @@ add_library(misc SHARED
         network/ecosystemlist.h
         network/ecosystemprovider.cpp
         network/ecosystemprovider.h
+        network/richnet.h
         network/entityflags.cpp
         network/entityflags.h
         network/facilitytype.cpp

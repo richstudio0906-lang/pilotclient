@@ -42,7 +42,8 @@ namespace swift::core::data
         {
             return false;
         }
-        return server.getEcosystem() == CEcosystem::privateFsd();
+        // our own network is listed with the other (non VATSIM) servers
+        return server.getEcosystem() == CEcosystem::privateFsd() || server.getEcosystem() == CEcosystem::richNet();
     }
 
     void CNetworkSetup::onSettingsChanged() { emit this->setupChanged(); }

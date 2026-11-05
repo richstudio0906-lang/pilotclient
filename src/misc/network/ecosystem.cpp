@@ -5,6 +5,7 @@
 
 #include "misc/comparefunctions.h"
 #include "misc/iconlist.h"
+#include "misc/network/richnet.h"
 #include "misc/verify.h"
 
 SWIFT_DEFINE_VALUEOBJECT_MIXINS(swift::misc::network, CEcosystem)
@@ -35,6 +36,12 @@ namespace swift::misc::network
         return e;
     }
 
+    const CEcosystem &CEcosystem::richNet()
+    {
+        static const CEcosystem e(RichNet);
+        return e;
+    }
+
     const QString &CEcosystem::getSystemString() const
     {
         static const QString u("unknown");
@@ -46,6 +53,7 @@ namespace swift::misc::network
         {
         case VATSIM: return v;
         case PrivateFSD: return fsd;
+        case RichNet: return richnet::networkName();
         case NoSystem: return no;
         case Unspecified:
         default: return u;
