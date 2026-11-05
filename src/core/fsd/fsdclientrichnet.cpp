@@ -45,10 +45,11 @@ namespace swift::core::fsd
         this->sendQueuedMessage(clientIdentification);
 
         // openfsd waits for #AP after $ID, it is sent as soon as we have the JWT
-        this->getRichNetAuthToken(cid, user.getPassword(), { this, [this](const QString &token) {
-                                      this->sendLogin(token);
-                                      this->updateConnectionStatus(CConnectionStatus::Connected);
-                                  } });
+        this->getRichNetAuthToken(cid, user.getPassword(),
+                                  { this, [this](const QString &token) {
+                                       this->sendLogin(token);
+                                       this->updateConnectionStatus(CConnectionStatus::Connected);
+                                   } });
         increaseStatisticsValue(QStringLiteral("sendClientIdentification"));
     }
 
@@ -69,30 +70,30 @@ namespace swift::core::fsd
         nwRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
         const QJsonObject jsonRequest { { "cid", cid }, { "password", password } };
 
-        sApp->postToNetwork(
-            nwRequest, CApplication::NoLogRequestId, QJsonDocument(jsonRequest).toJson(),
-            { this, [=, this](QNetworkReply *nwReplyPtr) {
-                 QScopedPointer<QNetworkReply, QScopedPointerDeleteLater> nwReply(nwReplyPtr);
+        sApp->postToNetwork(nwRequest, CApplication::NoLogRequestId, QJsonDocument(jsonRequest).toJson(),
+                            { this, [=, this](QNetworkReply *nwReplyPtr) {
+                                 QScopedPointer<QNetworkReply, QScopedPointerDeleteLater> nwReply(nwReplyPtr);
 
-                 // the user may have cancelled the login meanwhile
-                 if (!this->getConnectionStatus().isConnecting())
-                 {
-                     return;
-                 }
+                                 // the user may have cancelled the login meanwhile
+                                 if (!this->getConnectionStatus().isConnecting())
+                                 {
+                                     return;
+                                 }
 
-                 const QJsonObject json = QJsonDocument::fromJson(nwReply->readAll()).object();
-                 const QString token = json.value("token").toString();
-                 if (json.value("success").toBool() && !token.isEmpty())
-                 {
-                     callback(token);
-                     return;
-                 }
+                                 const QJsonObject json = QJsonDocument::fromJson(nwReply->readAll()).object();
+                                 const QString token = json.value("token").toString();
+                                 if (json.value("success").toBool() && !token.isEmpty())
+                                 {
+                                     callback(token);
+                                     return;
+                                 }
 
-                 const QString error =
-                     json.value("error_msg").isString() ? json.value("error_msg").toString() : nwReply->errorString();
-                 CLogMessage(this).error(u"Login to %1 with CID %2 failed: %3")
-                     << richnet::networkName() << cid << error;
-                 this->disconnectFromServer();
-             } });
+                                 const QString error = json.value("error_msg").isString() ?
+                                                           json.value("error_msg").toString() :
+                                                           nwReply->errorString();
+                                 CLogMessage(this).error(u"Login to %1 with CID %2 failed: %3")
+                                     << richnet::networkName() << cid << error;
+                                 this->disconnectFromServer();
+                             } });
     }
 } // namespace swift::core::fsd
