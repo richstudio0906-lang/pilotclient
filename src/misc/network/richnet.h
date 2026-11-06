@@ -20,6 +20,13 @@ namespace swift::misc::network::richnet
         return name;
     }
 
+    //! Name of the client, shown as window and application title
+    inline const QString &clientName()
+    {
+        static const QString name("SkyX Pilot");
+        return name;
+    }
+
     //! Client id sent in the $ID packet. openfsd parses it as 16 bit hex and does not check the value.
     constexpr quint16 fsdClientId = 0x524e;
 

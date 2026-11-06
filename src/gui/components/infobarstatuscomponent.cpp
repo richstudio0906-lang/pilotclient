@@ -26,6 +26,7 @@
 #include "gui/guiapplication.h"
 #include "gui/guiutility.h"
 #include "gui/led.h"
+#include "misc/network/richnet.h"
 #include "misc/network/server.h"
 #include "misc/simulation/simulatorplugininfo.h"
 
@@ -43,6 +44,14 @@ namespace swift::gui::components
         : QFrame(parent), ui(new Ui::CInfoBarStatusComponent)
     {
         ui->setupUi(this);
+
+        auto *title = new QLabel(swift::misc::network::richnet::clientName(), this);
+        title->setObjectName("lbl_ApplicationTitle");
+        ui->hl_InfoBarStatus->insertWidget(0, title);
+        ui->hl_InfoBarStatus->insertStretch(1);
+        ui->lbl_Network->setText("Network");
+        ui->lbl_Simulator->setText("Simulator");
+
         this->initLeds();
         this->adjustTextSize();
 

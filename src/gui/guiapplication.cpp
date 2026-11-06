@@ -50,6 +50,7 @@
 #include "misc/loghandler.h"
 #include "misc/logmessage.h"
 #include "misc/metadatautils.h"
+#include "misc/network/richnet.h"
 #include "misc/settingscache.h"
 #include "misc/slot.h"
 #include "misc/stringutils.h"
@@ -292,7 +293,7 @@ namespace swift::gui
 
     QString CGuiApplication::setExtraWindowTitle(const QString &extraInfo, QWidget *mainWindowWidget) const
     {
-        QString name(this->getApplicationNameVersionDetailed());
+        QString name(swift::misc::network::richnet::clientName());
         if (!extraInfo.isEmpty())
         {
             name = extraInfo % u' ' % name;
