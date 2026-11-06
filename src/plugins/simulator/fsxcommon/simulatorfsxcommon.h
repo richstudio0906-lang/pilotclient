@@ -405,6 +405,10 @@ namespace swift::simplugin::fsxcommon
         //! Adding an aircraft failed
         void addingAircraftFailed(const CSimConnectObject &simObject);
 
+        //! Add an aircraft again with the default model, so that a failed model does not make it invisible
+        //! \return false if there is no default model or the default model itself failed
+        bool addAgainWithDefaultModel(const CSimConnectObject &simObject);
+
         //! Create a detailed info about the failed aircraft
         bool verifyFailedAircraftInfo(const CSimConnectObject &simObject, swift::misc::CStatusMessage &details) const;
 

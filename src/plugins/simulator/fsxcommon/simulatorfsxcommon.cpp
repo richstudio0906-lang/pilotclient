@@ -1411,6 +1411,11 @@ namespace swift::simplugin::fsxcommon
 
         if (!verifiedAircraft || simObjAddAgain.getAddingExceptions() > ThresholdAddException)
         {
+            if (this->addAgainWithDefaultModel(simObjAddAgain))
+            {
+                return;
+            }
+
             const CStatusMessage msg =
                 verifiedAircraft ?
                     CLogMessage(this).warning(u"Model '%1' %2 failed %3 time(s) before and will be disabled")
@@ -1439,6 +1444,38 @@ namespace swift::simplugin::fsxcommon
                 m_addPendingAircraft.insert(simObjAddAgain, true); // add failed object
             });
         }
+    }
+
+    bool CSimulatorFsxCommon::addAgainWithDefaultModel(const CSimConnectObject &simObject)
+    {
+        const CAircraftModel defaultModel = this->getDefaultModel();
+        if (!defaultModel.hasModelString() ||
+            simObject.getAircraftModelString().compare(defaultModel.getModelString(), Qt::CaseInsensitive) == 0)
+        {
+            return false;
+        }
+
+        CLogMessage(this).warning(u"Model '%1' failed for '%2', trying the default model '%3'")
+            << simObject.getAircraftModelString() << simObject.getCallsign().asString()
+            << defaultModel.getModelString();
+
+        CSimulatedAircraft aircraft = simObject.getAircraft();
+        aircraft.setModel(defaultModel);
+        this->updateAircraftModel(aircraft.getCallsign(), aircraft.getModel(), this->identifier());
+
+        CSimConnectObject simObjAddAgain(simObject);
+        simObjAddAgain.setAircraft(aircraft);
+        simObjAddAgain.setAddingExceptions(0);
+
+        QPointer<CSimulatorFsxCommon> myself(this);
+        QTimer::singleShot(2000, this, [=] {
+            if (!myself || this->isShuttingDownOrDisconnected())
+            {
+                return;
+            }
+            m_addPendingAircraft.insert(simObjAddAgain, true);
+        });
+        return true;
     }
 
     bool CSimulatorFsxCommon::verifyFailedAircraftInfo(const CSimConnectObject &simObject,
