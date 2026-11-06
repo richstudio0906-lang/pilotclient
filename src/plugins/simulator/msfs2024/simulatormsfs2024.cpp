@@ -5,6 +5,9 @@
 
 #include "../fsxcommon/simconnectsymbols.h"
 
+#include "core/application.h"
+#include "core/data/globalsetup.h"
+
 using namespace swift::misc;
 using namespace swift::misc::aviation;
 using namespace swift::misc::physical_quantities;
@@ -22,8 +25,10 @@ namespace swift::simplugin::msfs2024
                                            IClientProvider *clientProvider, QObject *parent)
         : CSimulatorFsxCommon(info, ownAircraftProvider, remoteAircraftProvider, clientProvider, parent)
     {
-        this->setDefaultModel({ "A320NEO V2", CAircraftModel::TypeModelMatchingDefaultModel,
-                                "Airbus A320 default model", CAircraftIcaoCode("A320", "L2J") });
+        const QString configuredModel = sApp ? sApp->getGlobalSetup().getMsfs2024DefaultModel() : QString();
+        this->setDefaultModel({ configuredModel.isEmpty() ? QStringLiteral("A320NEO V2") : configuredModel,
+                                CAircraftModel::TypeModelMatchingDefaultModel, "Airbus A320 default model",
+                                CAircraftIcaoCode("A320", "L2J") });
     }
 
     bool CSimulatorMsFs2024::connectTo()

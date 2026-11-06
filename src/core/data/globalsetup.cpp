@@ -101,7 +101,9 @@ namespace swift::core::data
 
              % u"AFV map URL: " % getAfvMapUrl().toQString(i18n) % separator
 
-             % u"FSD auth URL: " % getFsdAuthUrl().toQString(i18n);
+             % u"FSD auth URL: " % getFsdAuthUrl().toQString(i18n) % separator
+
+             % u"MSFS 2024 default model: " % getMsfs2024DefaultModel();
 
         return s;
     }

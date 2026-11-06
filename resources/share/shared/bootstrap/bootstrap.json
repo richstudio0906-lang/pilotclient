@@ -61,5 +61,6 @@
     },
     "fsdAuthUrl": {
         "url": "https://skyx.richstudio.club/api/v1/fsd-jwt"
-    }
+    },
+    "msfs2024DefaultModel": "A320NEO V2"
 }

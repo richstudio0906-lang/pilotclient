@@ -145,6 +145,9 @@ namespace swift::core::data
         //! FSD JWT URL of our own network (openfsd: POST /api/v1/fsd-jwt)
         swift::misc::network::CUrl getFsdAuthUrl() const { return m_fsdAuthUrl; }
 
+        //! Title of the default model for MSFS 2024, empty for the default of the plugin
+        const QString &getMsfs2024DefaultModel() const { return m_msfs2024DefaultModel; }
+
         //! \copydoc swift::misc::mixin::String::toQString
         QString convertToQString(bool i18n = false) const;
 
@@ -184,6 +187,7 @@ namespace swift::core::data
         swift::misc::network::CUrl m_afvMapUrl; //!< AFV map URL
         swift::misc::network::CUrl m_vatsimAuthUrl; //!< VATSIM Auth URL
         swift::misc::network::CUrl m_fsdAuthUrl; //!< FSD JWT URL of our own network
+        QString m_msfs2024DefaultModel; //!< title of the default model for MSFS 2024
         bool m_dbDebugFlag = false; //!< can trigger DEBUG on the server, so you need to know what you are doing. Only
                                     //!< works with CBuildConfig::isLocalDeveloperDebugBuild
 
@@ -206,7 +210,8 @@ namespace swift::core::data
             SWIFT_METAMEMBER(afvApiServerUrl, 0, RequiredForJson),
             SWIFT_METAMEMBER(afvMapUrl, 0, RequiredForJson),
             SWIFT_METAMEMBER(vatsimAuthUrl, 0, RequiredForJson),
-            SWIFT_METAMEMBER(fsdAuthUrl));
+            SWIFT_METAMEMBER(fsdAuthUrl),
+            SWIFT_METAMEMBER(msfs2024DefaultModel));
     };
 } // namespace swift::core::data
 
