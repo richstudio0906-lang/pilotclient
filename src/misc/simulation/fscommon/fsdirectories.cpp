@@ -327,7 +327,14 @@ namespace swift::misc::simulation::fscommon
         {
             return {};
         }
-        return CFileUtils::normalizeFilePathToQtStandard(msfs2024PackagesDirImpl());
+        const QString packages = msfs2024PackagesDirImpl();
+        if (packages.isEmpty())
+        {
+            return {};
+        }
+        // Community only: the official packages hold modular aircraft that cannot be used as AI models,
+        // and parsing all installed packages takes tens of minutes
+        return CFileUtils::normalizeFilePathToQtStandard(CFileUtils::appendFilePaths(packages, "Community"));
     }
 
     const QString &CFsDirectories::fsxSimObjectsDir()
@@ -394,7 +401,16 @@ namespace swift::misc::simulation::fscommon
 
     const QStringList &CFsDirectories::msfs2024SimObjectsExcludeDirectoryPatterns()
     {
-        static const QStringList exclude { "PassiveAircraft", "STUB", "ZZZZ" };
+        // non aircraft SimObjects (e.g. GSX ground vehicles) also come with an aircraft.cfg
+        static const QStringList exclude { "PassiveAircraft",
+                                           "STUB",
+                                           "ZZZZ",
+                                           "SimObjects/AirplaneParts",
+                                           "SimObjects/Animals",
+                                           "SimObjects/Boats",
+                                           "SimObjects/GroundVehicles",
+                                           "SimObjects/Landmarks",
+                                           "SimObjects/Misc" };
         return exclude;
     }
 
