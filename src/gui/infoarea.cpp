@@ -723,6 +723,10 @@ namespace swift::gui
                 // East / West does not work (shown, but area itself empty)
                 // South does not have any effect
                 m_tabBar->setShape(QTabBar::TriangularSouth);
+                if (!m_showTabBar)
+                {
+                    m_tabBar->setMaximumHeight(0);
+                }
 
                 // signals, use Qt::QueuedConnection to avoid issues during shutdown
                 connect(m_tabBar, &QTabBar::tabBarDoubleClicked, this, &CInfoArea::onTabBarDoubleClicked,

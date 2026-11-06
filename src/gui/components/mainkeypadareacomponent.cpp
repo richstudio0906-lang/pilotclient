@@ -72,6 +72,15 @@ namespace swift::gui::components
                 &CMainKeypadAreaComponent::outputMuteChanged);
         connect(this, &CMainKeypadAreaComponent::commandEntered, sGui->getCoreFacade(), &CCoreFacade::parseCommandLine);
 
+        ui->pb_MainTextMessages->setText("Chat");
+        ui->pb_MainFlightplan->setText("Flight plan");
+
+        m_advanced = new QPushButton("Advanced", this);
+        m_advanced->setObjectName("pb_MainAdvanced");
+        m_advanced->setCheckable(true);
+        connect(m_advanced, &QPushButton::toggled, this, &CMainKeypadAreaComponent::setAdvancedVisible);
+        this->setAdvancedVisible(false);
+
         QPointer<CMainKeypadAreaComponent> myself(this);
         QTimer::singleShot(5000, this, [=, this] {
             if (!myself || !sGui)
@@ -83,6 +92,47 @@ namespace swift::gui::components
     }
 
     CMainKeypadAreaComponent::~CMainKeypadAreaComponent() = default;
+
+    void CMainKeypadAreaComponent::setAdvancedVisible(bool visible)
+    {
+        const QList<QWidget *> everyday {
+            ui->pb_Connect,      ui->pb_MainCockpit, ui->pb_MainTextMessages, ui->pb_MainFlightplan, ui->pb_MainAtc,
+            ui->pb_CockpitIdent, m_advanced
+        };
+        const QList<QWidget *> advanced { ui->pb_MainSettings, ui->pb_MainSimulator,     ui->pb_MainAircrafts,
+                                          ui->pb_MainUsers,    ui->pb_MainMappings,      ui->pb_MainRadar,
+                                          ui->pb_MainLog,      ui->pb_MainInterpolation, ui->pb_Audio,
+                                          ui->pb_SoundMute,    ui->pb_SoundMaxVolume,    ui->pb_Opacity050,
+                                          ui->pb_Opacity100 };
+
+        constexpr int Columns = 7;
+        constexpr int FirstRow = 1; // the command line is in row 0
+        int position = 0;
+        const auto place = [&](QWidget *button) {
+            ui->gl_MainKeypadArea->removeWidget(button);
+            ui->gl_MainKeypadArea->addWidget(button, FirstRow + position / Columns, position % Columns);
+            ++position;
+        };
+
+        for (QWidget *button : everyday)
+        {
+            place(button);
+        }
+        for (QWidget *button : advanced)
+        {
+            button->setVisible(visible);
+            if (visible)
+            {
+                place(button);
+            }
+            else
+            {
+                ui->gl_MainKeypadArea->removeWidget(button);
+            }
+        }
+        ui->lep_CommandLineInput->setVisible(visible);
+        emit this->advancedVisibleChanged(visible);
+    }
 
     void CMainKeypadAreaComponent::onMainInfoAreaChanged(int currentTabIndex, const QList<int> &dockedIndexes,
                                                          const QList<int> &floatingIndexes)

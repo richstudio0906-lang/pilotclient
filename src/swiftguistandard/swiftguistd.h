@@ -237,6 +237,9 @@ private:
     //! Login requested
     void loginRequested();
 
+    //! Show the menu bar, the tabs and all status items, or only what is needed for everyday use
+    void onAdvancedVisibleChanged(bool visible);
+
     //! Menu item clicked
     void onMenuClicked();
 

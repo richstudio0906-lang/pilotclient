@@ -186,6 +186,7 @@ void SwiftGuiStd::init()
     // start screen and complete menu
     this->setMainPageToInfoArea();
     this->initMenus();
+    this->onAdvancedVisibleChanged(false);
 
     // info
     connect(ui->comp_InfoBarStatus, &CInfoBarStatusComponent::transponderModeChanged, ui->dw_InfoBarStatus,
@@ -210,6 +211,13 @@ void SwiftGuiStd::init()
 
     // done
     m_init = true;
+}
+
+void SwiftGuiStd::onAdvancedVisibleChanged(bool visible)
+{
+    ui->mb_MainMenuBar->setVisible(visible);
+    ui->comp_InfoBarStatus->setAdvancedVisible(visible);
+    ui->comp_MainInfoArea->setTabsVisible(visible);
 }
 
 void SwiftGuiStd::initStyleSheet()
@@ -244,6 +252,8 @@ void SwiftGuiStd::initGuiSignals()
             &CMainInfoAreaComponent::selectAudioTab);
     connect(ui->comp_MainInfoArea, &CMainInfoAreaComponent::changedInfoAreaStatus, ui->comp_MainKeypadArea,
             &CMainKeypadAreaComponent::onMainInfoAreaChanged);
+    connect(ui->comp_MainKeypadArea, &CMainKeypadAreaComponent::advancedVisibleChanged, this,
+            &SwiftGuiStd::onAdvancedVisibleChanged);
 
     // text component
     connect(ui->comp_MainInfoArea->getTextMessageComponent(), &CTextMessageComponent::textMessageTabSelected, this,

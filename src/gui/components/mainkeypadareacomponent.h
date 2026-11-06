@@ -72,7 +72,13 @@ namespace swift::gui::components
         //! Request audio
         void audioPressed();
 
+        //! The advanced buttons have been shown or hidden
+        void advancedVisibleChanged(bool visible);
+
     private:
+        //! Show the advanced buttons or only the ones for everyday use
+        void setAdvancedVisible(bool visible);
+
         //! Button was clicked
         void buttonSelected();
 
@@ -103,6 +109,7 @@ namespace swift::gui::components
         void updateConnectionStatus();
 
         QScopedPointer<Ui::CMainKeypadAreaComponent> ui;
+        QPushButton *m_advanced = nullptr; //!< shows or hides the advanced buttons
         swift::misc::CIdentifier m_identifier { "MainKeypadAreaComponent", this };
     };
 } // namespace swift::gui::components

@@ -21,6 +21,7 @@ namespace swift::gui::components
         : CInfoArea(parent), ui(new Ui::CMainInfoAreaComponent)
     {
         ui->setupUi(this);
+        this->showTabBar(false); // shown with the advanced buttons of the keypad
         CInfoArea::initInfoArea(); // init base class
         this->setWindowIcon(CIcons::swift64());
         this->getLogComponent()->showFilterDialog();

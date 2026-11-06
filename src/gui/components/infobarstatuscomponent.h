@@ -38,6 +38,9 @@ namespace swift::gui::components
         //! Destructor
         ~CInfoBarStatusComponent() override;
 
+        //! Show all status items, or only network and simulator
+        void setAdvancedVisible(bool visible);
+
         //! DBus used?
         void setDBusStatus(bool dbus);
 

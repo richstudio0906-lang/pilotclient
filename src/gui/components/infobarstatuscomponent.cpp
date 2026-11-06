@@ -110,6 +110,17 @@ namespace swift::gui::components
 
     CInfoBarStatusComponent::~CInfoBarStatusComponent() = default;
 
+    void CInfoBarStatusComponent::setAdvancedVisible(bool visible)
+    {
+        const QList<QWidget *> advanced { ui->comp_XpdrMode, ui->lbl_MapperReady, ui->led_MapperReady,
+                                          ui->lbl_DBus,      ui->led_DBus,        ui->lbl_Ptt,
+                                          ui->led_Ptt,       ui->lbl_Audio,       ui->led_Audio };
+        for (QWidget *widget : advanced)
+        {
+            widget->setVisible(visible);
+        }
+    }
+
     void CInfoBarStatusComponent::initLeds()
     {
         this->updateSpacing();

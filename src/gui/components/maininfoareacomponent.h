@@ -45,6 +45,9 @@ namespace swift::gui::components
         //! Constructor
         explicit CMainInfoAreaComponent(QWidget *parent = nullptr);
 
+        //! Show the tabs of all areas, by default the keypad selects the area
+        void setTabsVisible(bool visible) { this->showTabBar(visible); }
+
         //! Destructor
         ~CMainInfoAreaComponent() override;
 
