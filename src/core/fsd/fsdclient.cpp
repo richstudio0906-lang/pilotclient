@@ -266,7 +266,7 @@ namespace swift::core::fsd
         m_filterPasswordFromLogin = true;
 
         m_loginSince = QDateTime::currentMSecsSinceEpoch();
-        const qint64 timerMs = qRound(PendingConnectionTimeoutMs * 1.25);
+        const qint64 timerMs = qRound(this->getPendingConnectionTimeoutMs() * 1.25);
 
         const QPointer<CFSDClient> myself(this);
         QTimer::singleShot(timerMs, this, [=, this] {
@@ -363,7 +363,8 @@ namespace swift::core::fsd
 
     void CFSDClient::sendPilotDataUpdate()
     {
-        if (this->getConnectionStatus().isDisconnected() && !m_unitTestMode)
+        // The timer already runs during login. openfsd closes the connection if a position arrives before #AP.
+        if (!this->isConnected() && !m_unitTestMode)
         {
             return;
         }
@@ -2786,7 +2787,7 @@ namespace swift::core::fsd
         }
 
         const qint64 age = QDateTime::currentMSecsSinceEpoch() - m_loginSince;
-        if (age < PendingConnectionTimeoutMs)
+        if (age < this->getPendingConnectionTimeoutMs())
         {
             return;
         }

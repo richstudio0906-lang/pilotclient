@@ -22,6 +22,9 @@ namespace swift::misc::network::richnet
 
     //! Client id sent in the $ID packet. openfsd parses it as 16 bit hex and does not check the value.
     constexpr quint16 fsdClientId = 0x524e;
+
+    //! Limit for the whole login. Fetching the JWT over the web API took up to 16s when measured.
+    constexpr qint64 loginTimeoutMs = 30000;
 } // namespace swift::misc::network::richnet
 
 #endif // SWIFT_MISC_NETWORK_RICHNET_H

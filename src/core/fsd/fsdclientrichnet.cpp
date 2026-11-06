@@ -96,4 +96,10 @@ namespace swift::core::fsd
                                  this->disconnectFromServer();
                              } });
     }
+
+    qint64 CFSDClient::getPendingConnectionTimeoutMs() const
+    {
+        return this->getServer().getEcosystem() == CEcosystem::richNet() ? richnet::loginTimeoutMs :
+                                                                           PendingConnectionTimeoutMs;
+    }
 } // namespace swift::core::fsd

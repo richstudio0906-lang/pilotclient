@@ -574,6 +574,7 @@ namespace swift::core::fsd
         void handleRichNetIdentification(const QStringList &tokens);
         void getRichNetAuthToken(const QString &cid, const QString &password,
                                  const swift::misc::CSlot<void(const QString &)> &callback);
+        qint64 getPendingConnectionTimeoutMs() const;
         //! @}
 
         //! Convert FlightRules to FlightType
