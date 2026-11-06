@@ -1776,8 +1776,8 @@ namespace swift::core
         // Warning info
         if (modelsCleaned.isEmpty())
         {
-            // error to force popup
-            CLogMessage(this).error(u"No models for matching ('%1'), swift without a model set will not work!")
+            // no model set is a normal setup on our network: all other aircraft use the default model
+            CLogMessage(this).info(u"No models for matching ('%1'), other aircraft will use the default model")
                 << simulator.toQString();
         }
         else if (!duplicateModels.isEmpty())

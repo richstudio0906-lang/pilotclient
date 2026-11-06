@@ -326,9 +326,9 @@ namespace swift::core::context
         const CSimulatorInfo simulators = this->simulatorsWithInitializedModelSet();
         if (simulators.isNoSimulator())
         {
-            msgs.push_back(CStatusMessage(this).validationError(
-                u"No model set so far, you need at least one model set. Hint: You can create a model set in the "
-                u"mapping tool, or copy an existing set in the launcher."));
+            msgs.push_back(CStatusMessage(this).validationInfo(
+                u"No model set so far, other aircraft will use the default model. Hint: You can create a model set in "
+                u"the mapping tool, or copy an existing set in the launcher."));
         }
         return msgs;
     }
