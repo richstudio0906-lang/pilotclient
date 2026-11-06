@@ -11,10 +11,10 @@
     "predefinedServers": {
         "containerbase": [
             {
-                "name": "RichNet Local",
-                "description": "Local openfsd (Docker) for testing",
-                "address": "127.0.0.1",
-                "port": 6809,
+                "name": "SkyX Network",
+                "description": "SkyX Network (SakuraFrp tunnel)",
+                "address": "frp-net.com",
+                "port": 15531,
                 "fsdSetup": {
                     "textCodec": "UTF-8",
                     "sendReceive": 749
@@ -60,6 +60,6 @@
         "url": "https://auth.vatsim.net/api/fsd-jwt"
     },
     "fsdAuthUrl": {
-        "url": "http://127.0.0.1:8000/api/v1/fsd-jwt"
+        "url": "https://skyx.richstudio.club/api/v1/fsd-jwt"
     }
 }
