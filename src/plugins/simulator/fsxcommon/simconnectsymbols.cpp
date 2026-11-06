@@ -8,6 +8,10 @@
 #include <SimConnect.h>
 // clang-format on
 
+#ifdef SWIFT_SIMCONNECT_MSFS2024_SDK
+#    include "simconnectp3dcompat.h"
+#endif
+
 #include <array>
 
 #include <QLibrary>

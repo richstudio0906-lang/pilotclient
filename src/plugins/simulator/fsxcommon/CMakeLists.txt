@@ -15,6 +15,7 @@ add_library(fsxcommon SHARED
         simconnectsettingscomponent.h
         simconnectsettingscomponent.ui
         simconnectwindows.h
+        simconnectp3dcompat.h
         simulatorfsxcommon.cpp
         simulatorfsxcommon.h
         simulatorfsxconfigwindow.cpp
