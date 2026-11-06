@@ -4,6 +4,7 @@
 #include "ownaircraftcomponent.h"
 
 #include <QPushButton>
+#include <QTabBar>
 
 #include "ui_ownaircraftcomponent.h"
 
@@ -83,6 +84,38 @@ namespace swift::gui::components
     }
 
     COwnAircraftComponent::~COwnAircraftComponent() = default;
+
+    void COwnAircraftComponent::setSimpleLayout()
+    {
+        ui->tabWidget->setCurrentWidget(ui->tb_general);
+        ui->tabWidget->tabBar()->setVisible(false);
+        ui->lbl_AircraftCombinedType->setVisible(false);
+        ui->le_AircraftCombinedType->setVisible(false);
+        ui->lblp_AircraftCombinedType->setVisible(false);
+
+        ui->selector_AircraftIcao->displayMode(CDbAircraftIcaoSelectorComponent::DisplayIcao);
+        ui->selector_AirlineIcao->displayMode(CDbAirlineIcaoSelectorComponent::DisplayDesignator);
+        ui->lbl_AircraftIcaoDesignator->setText("Aircraft");
+
+        const QList<QList<QWidget *>> rows {
+            { ui->lbl_Callsign, ui->le_Callsign, ui->lblp_Callsign },
+            { ui->lbl_AircraftIcaoDesignator, ui->selector_AircraftIcao, ui->lblp_AircraftIcao },
+            { ui->lbl_AircraftIcaoAirline, ui->selector_AirlineIcao, ui->lblp_AirlineIcao }
+        };
+        for (int row = 0; row < rows.size(); ++row)
+        {
+            for (int column = 0; column < rows[row].size(); ++column)
+            {
+                ui->gl_general->removeWidget(rows[row][column]);
+                ui->gl_general->addWidget(rows[row][column], row, column);
+            }
+            qobject_cast<CTickLabel *>(rows[row][2])->setTickedIconVisible(false);
+        }
+        for (int column = 0; column < ui->gl_general->columnCount(); ++column)
+        {
+            ui->gl_general->setColumnStretch(column, column == 1 ? 1 : 0);
+        }
+    }
 
     void COwnAircraftComponent::setUser(const CUser &user)
     {

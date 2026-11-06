@@ -48,8 +48,7 @@ namespace swift::gui::components
         ui->le_PartnerCallsign->setMaxLength(MaxLength);
         ui->le_PartnerCallsign->setValidator(ucv);
 
-        const int tab = m_networkSetup.wasLastUsedWithOtherServer() ? LoginOthers : LoginVATSIM;
-        ui->tw_Network->setCurrentIndex(tab);
+        ui->tw_Network->setCurrentIndex(LoginOthers); // our builds never log in to VATSIM
 
         connect(
             ui->tw_Network, &QTabWidget::currentChanged, this,
@@ -176,8 +175,10 @@ namespace swift::gui::components
 
     void CNetworkDetailsComponent::reloadOtherServersSetup()
     {
-        const CServerList otherServers(m_networkSetup.getOtherServersPlusPredefinedServers());
-        ui->comp_OtherServers->setServers(otherServers);
+        // the server of our network is fixed, it only comes from bootstrap.json
+        const CServerList predefinedServers = sGui ? sGui->getGlobalSetup().getPredefinedServers() : CServerList();
+        ui->comp_OtherServers->setServers(
+            predefinedServers.isEmpty() ? m_networkSetup.getOtherServersPlusPredefinedServers() : predefinedServers);
     }
 
 } // namespace swift::gui::components

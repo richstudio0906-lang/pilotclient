@@ -51,6 +51,32 @@ namespace swift::gui::editors
         ui->le_Id->setValidator(vatsim ? m_vatsimIntValidator.data() : nullptr);
     }
 
+    void CPilotForm::setSimpleLayout()
+    {
+        ui->lbl_HomeAirport->setVisible(false);
+        ui->comp_HomeAirport->setVisible(false);
+        ui->lblp_HomeAirport->setVisible(false);
+        ui->pb_UnhidePassword->setVisible(false);
+        ui->lbl_Id->setText("CID");
+
+        const QList<QList<QWidget *>> rows { { ui->lbl_Id, ui->le_Id, ui->lblp_Id },
+                                             { ui->lbl_Password, ui->le_Password, ui->lblp_Password },
+                                             { ui->lbl_RealName, ui->le_RealName, ui->lblp_RealName } };
+        for (int row = 0; row < rows.size(); ++row)
+        {
+            for (int column = 0; column < rows[row].size(); ++column)
+            {
+                ui->gl_PilotInfo->removeWidget(rows[row][column]);
+                ui->gl_PilotInfo->addWidget(rows[row][column], row, column);
+            }
+            qobject_cast<CTickLabel *>(rows[row][2])->setTickedIconVisible(false);
+        }
+        for (int column = 0; column < ui->gl_PilotInfo->columnCount(); ++column)
+        {
+            ui->gl_PilotInfo->setColumnStretch(column, column == 1 ? 1 : 0);
+        }
+    }
+
     CUser CPilotForm::getUser() const
     {
         CUser user = CUser(ui->le_Id->text().trimmed(), CUser::beautifyRealName(ui->le_RealName->text()), "",

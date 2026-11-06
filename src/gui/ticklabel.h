@@ -28,6 +28,9 @@ namespace swift::gui
         //! Set ticked
         void setTicked(bool ticked);
 
+        //! Show an icon when ticked, or only when not ticked
+        void setTickedIconVisible(bool visible);
+
         //! Set the tool tips
         void setToolTips(const QString &ticked, const QString &unticked);
 

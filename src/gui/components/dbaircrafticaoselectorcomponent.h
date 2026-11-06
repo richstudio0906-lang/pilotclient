@@ -40,7 +40,8 @@ namespace swift::gui::components
         enum Display
         {
             DisplayIcaoAndId,
-            DisplayCompleterString
+            DisplayCompleterString,
+            DisplayIcao
         };
 
         //! Constructor

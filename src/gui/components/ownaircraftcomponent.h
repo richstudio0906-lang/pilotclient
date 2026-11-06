@@ -48,6 +48,9 @@ namespace swift::gui::components
         //! Destructor
         ~COwnAircraftComponent() override;
 
+        //! Only callsign, aircraft and airline in one column: the combined type follows the aircraft
+        void setSimpleLayout();
+
         //! Validate aircaft
         swift::misc::CStatusMessageList validate() const;
 

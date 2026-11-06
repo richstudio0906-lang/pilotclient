@@ -35,7 +35,8 @@ namespace swift::gui::components
         enum Display
         {
             DisplayVDesignatorAndId,
-            DisplayCompleterString
+            DisplayCompleterString,
+            DisplayDesignator
         };
 
         //! Constructor

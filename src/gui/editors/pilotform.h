@@ -36,6 +36,9 @@ namespace swift::gui::editors
         //! Set VATSIM validation mode
         void setVatsimValidation(bool vatsim);
 
+        //! Only ID, password and name in one column
+        void setSimpleLayout();
+
         //! Values as user
         swift::misc::network::CUser getUser() const;
 

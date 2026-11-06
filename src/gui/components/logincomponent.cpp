@@ -72,6 +72,13 @@ namespace swift::gui::components
         ui->setupUi(this);
         m_logoffCountdownTimer.setObjectName("CLoginComponent:m_logoffCountdownTimer");
 
+        // only show what a pilot can change, the server is fixed
+        ui->gb_Network->setVisible(false);
+        ui->form_Pilot->setSimpleLayout();
+        ui->comp_OwnAircraft->setSimpleLayout();
+        ui->gb_PilotsDetails->setTitle("Pilot");
+        ui->gb_OwnAircraft->setTitle("Aircraft");
+
         this->setLogoffCountdown();
         connect(&m_logoffCountdownTimer, &QTimer::timeout, this, &CLoginComponent::logoffCountdown);
         connect(ui->pb_Cancel, &QPushButton::clicked, this, &CLoginComponent::loginCancelled, Qt::QueuedConnection);
@@ -578,7 +585,9 @@ namespace swift::gui::components
         ui->fr_LoginDisconnected->setVisible(!m_networkConnected);
         ui->fr_LogoffConfirmationConnected->setVisible(m_networkConnected);
 
-        const QString s = m_networkConnected ? QStringLiteral("disconnect") : QStringLiteral("connect");
+        const QString s = m_networkConnected   ? QStringLiteral("disconnect") :
+                          m_simulatorConnected ? QStringLiteral("connect") :
+                                                 QStringLiteral("waiting for simulator");
         ui->pb_Ok->setText(s);
 
         if (m_networkConnected)

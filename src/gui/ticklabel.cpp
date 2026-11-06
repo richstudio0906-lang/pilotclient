@@ -29,6 +29,12 @@ namespace swift::gui
         emit tickChanged(this->m_isPixmapTicked);
     }
 
+    void CTickLabel::setTickedIconVisible(bool visible)
+    {
+        m_pixmapTicked = visible ? swift::misc::CIcons::tick16() : QPixmap();
+        this->setLabel();
+    }
+
     void CTickLabel::setToolTips(const QString &ticked, const QString &unticked)
     {
         m_toolTipTicked = ticked;

@@ -65,7 +65,8 @@ namespace swift::gui::components
             setIcao = sGui->getWebDataServices()->smartAircraftIcaoSelector(icao);
         }
 
-        const QString icaoStr(m_display == DisplayIcaoAndId ? setIcao.getDesignatorDbKey() :
+        const QString icaoStr(m_display == DisplayIcao      ? setIcao.getDesignator() :
+                              m_display == DisplayIcaoAndId ? setIcao.getDesignatorDbKey() :
                                                               setIcao.getCombinedIcaoStringWithKey());
         ui->le_Aircraft->setText(icaoStr);
         ui->lbl_Description->setText(setIcao.getManufacturer());

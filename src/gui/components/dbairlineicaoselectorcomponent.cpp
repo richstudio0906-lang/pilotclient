@@ -44,7 +44,8 @@ namespace swift::gui::components
         const bool changed = CDbAirlineIcaoSelectorBase::setAirlineIcao(icao);
 
         // Always update GUI regardless of changed because of formattimg
-        const QString icaoStr(m_display == DisplayVDesignatorAndId ? this->m_currentIcao.getVDesignatorDbKey() :
+        const QString icaoStr(m_display == DisplayDesignator       ? this->m_currentIcao.getVDesignator() :
+                              m_display == DisplayVDesignatorAndId ? this->m_currentIcao.getVDesignatorDbKey() :
                                                                      this->m_currentIcao.getCombinedStringWithKey());
         ui->le_Airline->setText(icaoStr);
         ui->lbl_Description->setText(this->m_currentIcao.getName());
