@@ -9,24 +9,26 @@ Works around two issues on Mac OS
  2. Transparency caused the QToolBox labels to be broken
 **/
 QStackedWidget#sw_SwiftLauncher {
-  background-image: url(:/textures/icons/textures/texture-inner.jpg);
+  background: #F5F5F7;
 }
 
 /** special effects for start buttons **/
 #pg_Start QToolButton {
-  border: 1px solid green;
-  border-radius: 5px;
+  background: #FFFFFF;
+  border: 1px solid #D2D2D7;
+  border-radius: 10px;
 }
 
 #pg_Start QToolButton:hover {
-  border: 5px solid green;
-  border-radius: 5px;
+  background: #E5F1FF;
+  border: 1px solid #007AFF;
+  border-radius: 10px;
   min-width: 30px;
   min-height: 30px;
 }
 
 #pg_start QToolTip {
-  color: #ffffff;
-  background-color: #2a82da;
-  border: 1px solid white;
+  color: #1D1D1F;
+  background-color: #FFFFFF;
+  border: 1px solid #D2D2D7;
 }

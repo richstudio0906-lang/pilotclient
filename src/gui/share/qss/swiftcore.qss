@@ -4,7 +4,6 @@
  */
 
 #lep_CommandLineInput {
-  background-image: url(:/textures/icons/textures/texture-inner.jpg);
   margin-bottom: 5px;
   padding: 3px;
   border-radius: 5px;
@@ -16,10 +15,8 @@
 
 #gb_DBusMode {
   background: transparent; /** background is background color here **/
-  background-image: url(:/textures/icons/textures/texture-inner.jpg);
 }
 
 #gb_Controls {
   background: transparent; /** background is background color here **/
-  background-image: url(:/textures/icons/textures/texture-inner.jpg);
 }

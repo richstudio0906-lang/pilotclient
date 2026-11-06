@@ -10,8 +10,7 @@
 /** "xpdrmodeshort", m_transponder.getModeAsShortString **/
 
 swift--gui--CDockWidgetInfoBar {
-  background: black; /* background is background color here */
-  background-image: url(:/textures/icons/textures/texture-inner.jpg);
+  background: #FFFFFF;
   min-height: 1.25em;
 }
 
@@ -25,18 +24,18 @@ swift--gui--Components--CTransponderModeComponent {
 }
 
 QToolButton[xpdrmodeshort="I"] {
-  background-color: yellow;
-  color: black;
+  background-color: #FF9F0A;
+  color: white;
 }
 
 QToolButton[xpdrmodeshort="C"] {
-  background-color: green;
+  background-color: #34C759;
   color: white;
 }
 
 QToolButton[xpdrmodeshort="S"] {
-  background-color: blue;
-  color: yellow;
+  background-color: #007AFF;
+  color: white;
 }
 
 swift--gui--Components--CInfoBarStatusComponent {
@@ -52,7 +51,12 @@ QLabel {
   padding-top:    0px;
   border: 0px;
   /**
-  background-color: darkslategray;
-  background-image: url(:/textures/icons/textures/texture-outer.jpg);
+  background-color: #F5F5F7;
   **/
+}
+
+#lbl_ApplicationTitle {
+  font-size: 15pt;
+  font-weight: 600;
+  padding-left: 0px;
 }

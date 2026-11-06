@@ -4,15 +4,14 @@
  */
 
 QDialog {
-  background: black; /** background is background color here **/
-  background-image: url(:/textures/icons/textures/texture-inner.jpg);
+  background: #FFFFFF;
 }
 
 QPushButton {
-  background-color: rgba(0, 0, 255, 128);
+  background-color: #007AFF;
   border-style: none;
-  border-radius:3px;
-  color: yellow;
+  border-radius: 6px;
+  color: white;
   padding: 3px;
   margin-right: 5px;
 }
