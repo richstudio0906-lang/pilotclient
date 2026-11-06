@@ -13,10 +13,10 @@
 //! Server addresses and URLs are not here, they come from bootstrap.json.
 namespace swift::misc::network::richnet
 {
-    //! Display name of the network (working title, rename it here only)
+    //! Display name of the network (rename it here only)
     inline const QString &networkName()
     {
-        static const QString name("RichNet");
+        static const QString name("SkyX Network");
         return name;
     }
 
